@@ -17,8 +17,8 @@ jobs:
 
       - name: instalar as pre-requistos
         uses: actions/setup-node@v3
-          with:
-            node-version: 14
+        with:
+          node-version: 14
 
       - name: instalar as libs
         run: npm install
