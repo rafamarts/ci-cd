@@ -1,0 +1,33 @@
+# Nome workflow
+name: Deploy para prod
+
+# Quando deve rodar o workflow
+on:
+  pull_request:
+    branches:
+      - "main"
+
+# Quais os passos para o deploy
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout do projeto
+        uses: actions/checkout@v3
+
+      - name: instalar as pre-requistos
+        uses: actions/setup-node@v3
+          with:
+            node-version: 14
+
+      - name: instalar as libs
+        run: npm install
+
+      - name: build do projeto
+        run: npm run build
+
+      - name: deploy para netlify
+        uses: jsmrcaga/action-netlify-deploy@v1.1.0
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
